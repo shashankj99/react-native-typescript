@@ -4,6 +4,7 @@ import axios from 'axios';
 import React, { FC, ReactElement, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import UserInput from '../components/auth/UserInput';
+import { BASE_URL } from '../config';
 import { AutoCapitalize, AutoComplete, KeyboardType } from '../interfaces/auth/UserSignupInput';
 
 const Signin: FC<{navigation: NavigationProp<ParamListBase>}> = ({
@@ -25,12 +26,14 @@ const Signin: FC<{navigation: NavigationProp<ParamListBase>}> = ({
         }
 
         try {
-            const { data } = await axios.post('http://localhost:8000/api/login', {
+            const { data } = await axios.post(`${BASE_URL}/signin`, {
                 email,
                 password,
             });
 
             setLoading(false);
+
+            (data.error) ? alert(data.error) : alert('Signin successful');
 
         } catch (err) {
             console.log(err);

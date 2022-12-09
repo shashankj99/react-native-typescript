@@ -4,6 +4,7 @@ import axios from 'axios';
 import React, { FC, ReactElement, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import UserInput from '../components/auth/UserInput';
+import { BASE_URL } from '../config';
 import { AutoCapitalize, AutoComplete, KeyboardType } from '../interfaces/auth/UserSignupInput';
 
 const Signup: FC<{navigation: NavigationProp<ParamListBase>}> = ({
@@ -26,13 +27,15 @@ const Signup: FC<{navigation: NavigationProp<ParamListBase>}> = ({
         }
 
         try {
-            const { data } = await axios.post('http://localhost:8000/api/register', {
+            const { data } = await axios.post(`${BASE_URL}/signup`, {
                 name,
                 email,
                 password,
             });
 
             setLoading(false);
+
+            (data.error) ? alert(data.error) : alert('Signup successful');
 
         } catch (err) {
             console.log(err);

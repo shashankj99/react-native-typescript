@@ -1,0 +1,1 @@
+export const BASE_URL = 'https://bright-sheep-sing-27-34-104-240.loca.lt/api';
