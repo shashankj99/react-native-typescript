@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { Button, Icon, Image, Text } from '@rneui/themed';
 import axios from 'axios';
@@ -33,7 +34,12 @@ const Signin: FC<{navigation: NavigationProp<ParamListBase>}> = ({
 
             setLoading(false);
 
-            (data.error) ? alert(data.error) : alert('Signin successful');
+            if (data.error) {
+                alert(data.error);
+            } else {
+                await AsyncStorage.setItem('@auth', JSON.stringify(data));
+                alert('signin successful');
+            }
 
         } catch (err) {
             console.log(err);
