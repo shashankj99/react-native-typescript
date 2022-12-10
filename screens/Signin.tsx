@@ -27,7 +27,7 @@ const Signin: FC<{navigation: NavigationProp<ParamListBase>}> = ({
         }
 
         try {
-            const { data } = await axios.post(`${BASE_URL}/signin`, {
+            const { data } = await axios.post('/signin', {
                 email,
                 password,
             });
@@ -39,6 +39,7 @@ const Signin: FC<{navigation: NavigationProp<ParamListBase>}> = ({
             } else {
                 await AsyncStorage.setItem('@auth', JSON.stringify(data));
                 alert('signin successful');
+                navigation.navigate('Home');
             }
 
         } catch (err) {

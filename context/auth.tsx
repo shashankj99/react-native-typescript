@@ -1,5 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {useState, useEffect, createContext, ReactElement, FC, PropsWithChildren, ReactNode} from 'react';
+import axios from 'axios';
+import React, {
+    useState,
+    useEffect,
+    createContext,
+    ReactElement,
+    FC,
+    ReactNode,
+} from 'react';
+import { BASE_URL } from '../config';
 import { AuthResponse } from '../interfaces/auth/AuthResponse';
 
 type Props = {
@@ -11,6 +20,10 @@ const AuthContext = createContext<AuthResponse | null>(defaultStateValue);
 
 const AuthProvider: FC<Props> = ({ children }): ReactElement => {
     const [state, setState] = useState<AuthResponse>(defaultStateValue);
+
+    // set default base url to auth context so that we don't need to
+    // use it every time in the screens
+    axios.defaults.baseURL = BASE_URL;
 
     useEffect(() => {
         const loadFromAsyncStorage = async(): Promise<void> => {
