@@ -9,17 +9,16 @@ import React, {
     ReactNode,
 } from 'react';
 import { BASE_URL } from '../config';
-import { AuthResponse } from '../interfaces/auth/AuthResponse';
+import { AuthContextType } from '../interfaces/auth/AuthResponse';
 
 type Props = {
     children: ReactNode,
 }
 
-const defaultStateValue: AuthResponse = { user: null, token: '' };
-const AuthContext = createContext<AuthResponse | null>(defaultStateValue);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AuthProvider: FC<Props> = ({ children }): ReactElement => {
-    const [state, setState] = useState<AuthResponse>(defaultStateValue);
+    const [authResponse, setAuthResponse] = useState<AuthContextType>();
 
     // set default base url to auth context so that we don't need to
     // use it every time in the screens
@@ -29,13 +28,19 @@ const AuthProvider: FC<Props> = ({ children }): ReactElement => {
         const loadFromAsyncStorage = async(): Promise<void> => {
             let data: string = await AsyncStorage.getItem('@auth');
             const parsedData = JSON.parse(data);
-            setState({ ...state, user: parsedData.user, token: parsedData.token });
+            setAuthResponse({
+                ...authResponse,
+                authResponse: {
+                    user: parsedData.user,
+                    token: parsedData.token,
+                }
+            });
         }
         loadFromAsyncStorage();
     }, []);
 
     return (
-        <AuthContext.Provider value={state}>
+        <AuthContext.Provider value={{ authResponse, setAuthResponse } as AuthContextType}>
             {children}
         </AuthContext.Provider>
     );

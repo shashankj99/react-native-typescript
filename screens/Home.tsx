@@ -4,10 +4,10 @@ import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FooterTabs from '../components/FooterTabs';
 import { AuthContext } from '../context/auth';
-import { AuthResponse } from '../interfaces/auth/AuthResponse';
+import { AuthContextType } from '../interfaces/auth/AuthResponse';
 
 const Home: FC<ReactNode> = () => {
-    const data = useContext<AuthResponse>(AuthContext);
+    const data = useContext<AuthContextType>(AuthContext);
     return (
         <SafeAreaView style={styles.homePageLayout}>
             <Text>

@@ -10,5 +10,10 @@ export interface User {
 
 export type AuthResponse = {
     user?: User,
-    token: string
+    token?: string
+}
+
+export type AuthContextType = {
+    authResponse: AuthResponse,
+    setAuthResponse: (newAuthResponse: AuthResponse) => void,
 }

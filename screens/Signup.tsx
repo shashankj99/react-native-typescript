@@ -2,9 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { Button, Icon, Image, Text } from '@rneui/themed';
 import axios from 'axios';
-import React, { FC, ReactElement, useState } from 'react';
+import React, { FC, ReactElement, useState, useContext } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import UserInput from '../components/auth/UserInput';
+import { AuthContext } from '../context/auth';
 import { AutoCapitalize, AutoComplete, KeyboardType } from '../interfaces/auth/UserSignupInput';
 
 const Signup: FC<{navigation: NavigationProp<ParamListBase>}> = ({
@@ -16,6 +17,7 @@ const Signup: FC<{navigation: NavigationProp<ParamListBase>}> = ({
     const [showPassword, setShowPassword] = useState(false);
     const [secureTextEntry, setSecuredTextEntry] = useState(true);
     const [loading, setLoading] = useState(false);
+    // const [authResponse, setAuthResponse] = useContext(AuthContext);
 
     const handleSubmit = async (): Promise<void|undefined> => {
         setLoading(true);
